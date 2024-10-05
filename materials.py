@@ -3,7 +3,7 @@ from pprint import pprint
 import pandas as pd
 import cohere
 import requests
-import os
+import os, ast
 
 MATERIAL_NAMES = ['Butyl rubber (IIR)', 'Ethylene vinyl acetate (EVA)' 'Natural rubber', 'Polychloroprene (Neoprene)'
  'Polyisoprene rubber', 'Polyurethane', 'Silicone elastomers', 'Acrylonitrile butadiene styrene (ABS)', 'Cellulose polymers (CA)',
@@ -34,7 +34,9 @@ def get_materials_for_product(user_prompt: str) -> dict:
         num_generations=1,
         temperature=0.5,
     )
-    return selected_list.generations[0].text.strip()
+    selected_list = ast.literal_eval(selected_list.generations[0].text.strip())
+    
+    return selected_list
 
 def get_material_data(materials) -> pd.DataFrame:
     

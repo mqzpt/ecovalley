@@ -29,7 +29,7 @@ def get_materials_for_product(user_prompt: str) -> dict:
     
     selected_list = co.generate(
         model="command-xlarge-nightly",
-        prompt=f"You are a helpful assistant that selects materials for products. Do not provide any text outputs, only return a python list with no new lines or spaces. You may only choose products in the following list: {MATERIAL_NAMES}. Return a Python list of 3 dictionaries, each dictionary MUST contain MULTIPLE keys and values, where the keys are the materials in the proudct, and the values are the amount of each product in kilograms. Complete this task for the following product: {user_prompt}.",
+        prompt=f"You are a helpful assistant that selects materials for products. Do not provide any text outputs, only return a python list with no new lines or spaces. You may only choose products EXACTLY as they appear in the following list: {MATERIAL_NAMES}. Return a Python list of 3 dictionaries, each dictionary MUST contain MULTIPLE keys and values, where the keys are the materials in the proudct, and the values are the amount of each product in kilograms. Complete this task for the following product: {user_prompt}.",
         max_tokens=250,
         num_generations=1,
         temperature=0.5,
@@ -38,7 +38,9 @@ def get_materials_for_product(user_prompt: str) -> dict:
     
     return selected_list
 
-def get_material_data(materials) -> pd.DataFrame:
+def get_option_dataframes(material_dict) -> pd.DataFrame:
+    
+    option_frames = []
     
     # Get the current file's directory
     base_dir = os.path.dirname(__file__)
@@ -47,11 +49,13 @@ def get_material_data(materials) -> pd.DataFrame:
     # Read the CSV file
     materials_df = pd.read_csv(csv_path)
     
-    # Get the relevant materials
-    materials_df.loc[materials_df['material'].isin(materials.keys()), 'cost_per_kg']
-    materials_df['cost'] = materials_df['cost_per_kg'] * materials.values()
+    for option in material_dict:
+        option_df = materials_df.loc[materials_df['material'].isin(option.keys())]
+        option_df['cost'] = option_df['price_per_kg'] * list(option.values())
+        option_frames.append(option_df)
         
-
+    return option_frames
+        
 # CLI for testing prompts
 if __name__ == "__main__":
     print("\n*** Get Material Options ***\n")
@@ -63,7 +67,12 @@ if __name__ == "__main__":
     while not bool(prompt.strip()):
         prompt = input("\nPlease enter your prompt (it was empty): ")
 
-    material_data = get_materials_for_product(prompt)
+    material_dict = get_materials_for_product(prompt)
 
     print("\n")
-    pprint(material_data)
+    pprint(material_dict)
+    
+    option_frames = get_option_dataframes(material_dict)
+    
+    pprint(option_frames)
+    

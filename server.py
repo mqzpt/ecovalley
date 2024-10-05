@@ -4,31 +4,6 @@ from waitress import serve
 
 app = Flask(__name__)
 
-# Materials list (mock data)
-materials = [
-    {
-        "id": 1,
-        "name": "Recycled Steel",
-        "carbon_footprint": "0.5 kg CO2/kg",
-        "recyclability": 98,
-        "sustainability_score": 85
-    },
-    {
-        "id": 2,
-        "name": "Bamboo",
-        "carbon_footprint": "0.2 kg CO2/kg",
-        "recyclability": 100,
-        "sustainability_score": 90
-    },
-    {
-        "id": 3,
-        "name": "Hemp Plastic",
-        "carbon_footprint": "0.1 kg CO2/kg",
-        "recyclability": 90,
-        "sustainability_score": 80
-    }
-]
-
 # Home page route
 @app.route('/')
 def home():

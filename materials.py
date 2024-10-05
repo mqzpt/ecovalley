@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from pprint import pprint
+import pandas as pd
 import requests
 import os
 
@@ -32,25 +33,9 @@ def get_materials_for_product(prompt: str) -> dict:
     # Filter based on the prompt (optional)
     return [material for material in materials_data if prompt.lower() in material['name'].lower()]
 
-def get_cost(material_name: str) -> dict:
-    # Mock data for now, you can replace this with actual API calls later
-    cost_data = [
-        {
-            "name": "Recycled Steel",
-            "cost": 0.5
-        },
-        {
-            "name": "Bamboo",
-            "cost": 0.2
-        },
-        {
-            "name": "Hemp Plastic",
-            "cost": 0.1
-        }
-    ]
-
-    # Filter based on the material name
-    return [cost for cost in cost_data if material_name.lower() in cost['name'].lower()]
+def get_costs(materials) -> dict:
+    for material in materials.keys():
+        
 
 # CLI for testing prompts
 if __name__ == "__main__":

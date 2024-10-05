@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from materials import get_materials_for_product
+from materials import get_materials_for_product, get_option_dataframes
 from waitress import serve
 
 app = Flask(__name__)
@@ -14,10 +14,14 @@ def home():
 def materials_list():
     if request.method == 'POST':
         prompt = request.form['prompt']
-        materials = get_materials_for_product(prompt)
+        material_dict = get_materials_for_product(prompt)
+        option_frames = get_option_dataframes(material_dict)
     else:
-        materials = get_materials_for_product('')  # Default to showing all materials
-    return render_template('materials.html', materials=materials)
+        material_dict = get_materials_for_product('')  # Default to showing all materials
+        option_frames = get_option_dataframes(material_dict)
+    
+    # Pass the option_frames to the template for rendering
+    return render_template('materials.html', option_frames=option_frames)
 
 # Comparison page route
 @app.route('/compare', methods=['POST'])

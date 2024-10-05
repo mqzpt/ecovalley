@@ -56,7 +56,7 @@ def get_cost(material_name: str) -> dict:
 if __name__ == "__main__":
     print("\n*** Get Material Options ***\n")
 
-    prompt = input("\nPlease enter your prompt: ")
+    prompt = input("\nPlease enter your desired product: ")
 
     # Check for empty strings or string with only spaces
     

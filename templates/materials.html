@@ -1,19 +1,37 @@
 {% extends "base.html" %} {% block content %}
 <h1>Material Options</h1>
-<div class="row">
-  {% for material in materials %}
-  <div class="col-md-4">
-    <div class="card mb-4 shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">{{ material.name }}</h5>
-        <p class="card-text">
-          Carbon Footprint: {{ material.carbon_footprint }}<br />
-          Recyclability: {{ material.recyclability }}%<br />
-          Sustainability Score: {{ material.sustainability_score }}/100
-        </p>
+<form action="/compare" method="post">
+  <div class="row">
+    {% for material in materials %}
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ material.name }}</h5>
+          <p class="card-text">
+            Carbon Footprint: {{ material.carbon_footprint }}<br />
+            Recyclability: {{ material.recyclability }}%<br />
+            Sustainability Score: {{ material.sustainability_score }}/100
+          </p>
+          <!-- Checkbox for selecting material for comparison -->
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="material_ids"
+              value="{{ material.id }}"
+              id="material-{{ material.id }}"
+            />
+            <label class="form-check-label" for="material-{{ material.id }}">
+              Compare {{ material.name }}
+            </label>
+          </div>
+        </div>
       </div>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
+  <button type="submit" class="btn btn-primary">
+    Compare Selected Materials
+  </button>
+</form>
 {% endblock %}

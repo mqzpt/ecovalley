@@ -1,23 +1,29 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    padding: 2rem;
-    background-color: #333;
-    color: whitesmoke;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    font-size: 2rem;
-}
-
-input, button {
-    font-size: 2rem;
-    padding: 1rem;
-    border-radius: 10px;
-}
+/* Green background for the navbar */
+.navbar {
+    background-color: #28a745 !important;  /* Custom green */
+  }
+  
+  /* Make the footer background gray */
+  footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    font-size: 14px;
+  }
+  
+  /* Custom button colors */
+  .btn-primary {
+    background-color: #25b747;
+    border-color: #24c64a;
+  }
+  
+  .btn-primary:hover {
+    background-color: #25b747;
+    border-color: #24c64a;
+  }
+  
+  /* Larger text area */
+  textarea {
+    font-size: 1.1em;
+    padding: 10px;
+  }
+  

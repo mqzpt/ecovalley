@@ -29,12 +29,11 @@ def get_materials_for_product(user_prompt: str) -> dict:
     
     selected_list = co.generate(
         model="command-xlarge-nightly",
-        prompt=f"You are a helpful assistant that selects materials for products. Do not provide any text outputs, only return a python list with no new lines or spaces. You may only choose products in the following list: {MATERIAL_NAMES}. Return a Python list of 3 dictionaries, each dictionary MUST contain MULTIPLE keys and values, where the keys are the materials in the proudct, and the values are the amount of each product in kilograms. An example output could look like: '[{{'Butyl rubber (IIR)': 0.7, 'Ethylene vinyl acetate (EVA)': 0.3, 'Natural rubber': 0.5}}, {{'Polychloroprene (Neoprene)': 1.2, 'Polyisoprene rubber': 0.8, 'Butyl rubber (IIR)': 0.6}}, {{'Natural rubber': 0.4, 'Polyisoprene rubber': 0.9, 'Butyl rubber (IIR)': 1.0}}]' Complete this task for the following product: {user_prompt}.",
+        prompt=f"You are a helpful assistant that selects materials for products. Do not provide any text outputs, only return a python list with no new lines or spaces. You may only choose products in the following list: {MATERIAL_NAMES}. Return a Python list of 3 dictionaries, each dictionary MUST contain MULTIPLE keys and values, where the keys are the materials in the proudct, and the values are the amount of each product in kilograms. Complete this task for the following product: {user_prompt}.",
         max_tokens=250,
         num_generations=1,
         temperature=0.5,
     )
-    print(selected_list.generations[0].text.strip())
     return selected_list.generations[0].text.strip()
 
 def get_material_data(materials) -> pd.DataFrame:

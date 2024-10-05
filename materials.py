@@ -6,7 +6,7 @@ import os
 load_dotenv()
 
 
-def get_current_weather(city="Waterloo"):
+def get_materials_for_product(get_materials_for_product="Waterloo"):
 
     request_url = f'https://api.openweathermap.org/data/2.5/weather?appid={os.getenv("WEATHER_API_KEY")}&q={city}&units=metric'
 
@@ -16,15 +16,16 @@ def get_current_weather(city="Waterloo"):
 
 
 if __name__ == "__main__":
-    print("\n*** Get Current Weather ***\n")
+    print("\n*** Get Material Options ***\n")
 
-    city = input("\nPlease enter a city name: ")
+    prompt = input("\nPlease enter your prompt: ")
 
     # Check for empty strings or string with only spaces
-    if not bool(city.strip()):
-        city = "Waterloo"
+    
+    while not bool(prompt.strip()):
+        prompt = input("\nPlease enter your prompt (it was empty): ")
 
-    weather_data = get_current_weather(city)
+    material_data = get_materials_for_product(prompt)
 
     print("\n")
-    pprint(weather_data)
+    pprint(material_data)

@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+<h2>Compare Materials</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Material</th>
+      <th>Carbon Footprint</th>
+      <th>Recyclability</th>
+      <th>Sustainability Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for material in compared_materials %}
+    <tr>
+      <td>{{ material.name }}</td>
+      <td>{{ material.carbon_footprint }}</td>
+      <td>{{ material.recyclability }}%</td>
+      <td>{{ material.sustainability_score }}/100</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

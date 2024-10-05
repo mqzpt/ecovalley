@@ -1,8 +1,14 @@
 {% extends "base.html" %} {% block content %}
-<h1>Welcome to the Sustainable Materials Hub</h1>
-<p>
-  This platform helps you browse and compare materials based on sustainability
-  criteria.
-</p>
-<a href="/materials" class="btn btn-primary">Explore Materials</a>
+<h1>Welcome to Sustainable Materials Selection</h1>
+<form action="/materials" method="post">
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      name="prompt"
+      placeholder="Enter material name"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Search Materials</button>
+</form>
 {% endblock %}

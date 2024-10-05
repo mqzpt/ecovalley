@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %}
+<h1>Material Options</h1>
 <div class="row">
   {% for material in materials %}
   <div class="col-md-4">
@@ -10,9 +11,6 @@
           Recyclability: {{ material.recyclability }}%<br />
           Sustainability Score: {{ material.sustainability_score }}/100
         </p>
-        <a href="/materials/{{ material.id }}" class="btn btn-primary"
-          >Learn More</a
-        >
       </div>
     </div>
   </div>

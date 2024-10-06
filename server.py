@@ -13,16 +13,20 @@ def home():
 # Materials list route
 @app.route('/materials', methods=['GET', 'POST'])
 def materials_list():
-    if request.method == 'POST':
-        prompt = request.form['prompt']
-        material_dict = get_materials_for_product(prompt)
-        option_frames = get_option_dataframes(material_dict)
-    else:
-        material_dict = get_materials_for_product('')  # Default to showing all materials
-        option_frames = get_option_dataframes(material_dict)
-    
-    # Pass the option_frames to the template for rendering
-    return render_template('materials.html', option_frames=option_frames)
+    try:
+        if request.method == 'POST':
+            prompt = request.form['prompt']
+            material_dict = get_materials_for_product(prompt)
+            option_frames = get_option_dataframes(material_dict)
+        else:
+            material_dict = get_materials_for_product('')  # Default to showing all materials
+            option_frames = get_option_dataframes(material_dict)
+            
+            # Pass the option_frames to the template for rendering
+        return render_template('materials.html', option_frames=option_frames)
+    except Exception as e:
+        print(e)
+        return render_template("err.html")
 
 @app.route('/compare', methods=['POST'])
 def compare():

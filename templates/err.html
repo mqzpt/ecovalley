@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+<h1>Sustainable Materials Selection</h1>
+<div>
+    <h4 style="color:red;">Please Try Again!</h3>
+</div>
+<form action="/materials" method="post">
+  <div class="mb-3">
+    <textarea
+      class="form-control"
+      name="prompt"
+      id="prompt"
+      rows="4"
+      placeholder="Enter your material prompt here..."
+    ></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Find options!</button>
+</form>
+{% endblock %}

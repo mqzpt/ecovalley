@@ -53,20 +53,32 @@ def get_option_dataframes(material_dict) -> pd.DataFrame:
         option_df = materials_df.loc[materials_df['material'].isin(option.keys())]
         option_df['cost'] = round(option_df['price_per_kg'] * list(option.values()), 4)
         
-        amount_used_series = pd.Series(list(option.values()))
-        option_df['amount_used_kg'] = amount_used_series.round(3)
+        option_df['amount_used_kg'] = list(option.values())
+        option_df['amount_used_kg'].round(3)
         
         option_df['energy_used_mj'] = round(option_df['energy_mj_per_kg'] * list(option.values()), 3)
         option_df['carbon_used_kg'] = round(option_df['carbon_kg_per_kg'] * list(option.values()), 3)
-        option_frames.append(option_df[['material', 'amount_used_kg', 'cost', 'energy_used_mj', 'carbon_used_kg']])
-        
+
+        totals = [
+            "Totals",
+            round(sum(list(option_df["amount_used_kg"])), 2),  # total material weight
+            round(sum(list(option_df["cost"])), 2),  # total cost
+            round(sum(list(option_df["energy_used_mj"])), 2),  # total energy used
+            round(sum(list(option_df["carbon_used_kg"])), 2)  # total carbon used
+        ]
+
+        temp_df = option_df[['material', 'amount_used_kg', 'cost', 'energy_used_mj', 'carbon_used_kg']]
+        temp_df.loc[len(option_df.index) + 1] = totals
+
+        option_frames.append(temp_df)
+
     return option_frames
         
 # CLI for testing prompts
 if __name__ == "__main__":
     print("\n*** Get Material Options ***\n")
 
-    prompt = input("\nPlease enter your desired product: ")
+    prompt = "bike" # input("\nPlease enter your desired product: ")
 
     # Check for empty strings or string with only spaces
     

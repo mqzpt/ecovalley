@@ -1,23 +1,45 @@
 {% extends "base.html" %} {% block content %}
-<h2>Compare Materials</h2>
-<table class="table table-striped">
+<form method="POST" action="/compare">
+  {% for material in option_frames %}
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      name="material_ids"
+      value="{{ material.id }}"
+    />
+    <label class="form-check-label" for="{{ material.id }}">
+      {{ material.name }}
+    </label>
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">
+    Compare Selected Materials
+  </button>
+</form>
+
+<h2>Material Comparison</h2>
+<table class="table">
   <thead>
     <tr>
       <th>Material</th>
-      <th>Carbon Footprint</th>
-      <th>Recyclability</th>
-      <th>Sustainability Score</th>
+      <th>Price (USD/kg)</th>
+      <th>Energy (MJ/kg)</th>
+      <th>Carbon (kg/kg)</th>
+      <th>Water (L/kg)</th>
     </tr>
   </thead>
   <tbody>
     {% for material in compared_materials %}
     <tr>
-      <td>{{ material.name }}</td>
-      <td>{{ material.carbon_footprint }}</td>
-      <td>{{ material.recyclability }}%</td>
-      <td>{{ material.sustainability_score }}/100</td>
+      <td>{{ material['material'] }}</td>
+      <td>{{ material['price_per_kg'] }}</td>
+      <td>{{ material['energy_mj_per_kg'] }}</td>
+      <td>{{ material['carbon_kg_per_kg'] }}</td>
+      <td>{{ material['water_l_per_kg'] }}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+
 {% endblock %}

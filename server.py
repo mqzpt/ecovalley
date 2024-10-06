@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from materials import get_materials_for_product, get_option_dataframes
 from waitress import serve
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -23,16 +24,18 @@ def materials_list():
     # Pass the option_frames to the template for rendering
     return render_template('materials.html', option_frames=option_frames)
 
-# Comparison page route
 @app.route('/compare', methods=['POST'])
 def compare():
-    # Get selected materials IDs from form submission (for simplicity, assuming form submission)
-    selected_ids = request.form.getlist('material_ids')
+    selected_names = request.form.getlist('material_names')  # List of selected material names
     
-    # Filter out the selected materials for comparison
-    compared_materials = [material for material in materials if str(material['id']) in selected_ids]
+    # Reload materials from the CSV (or pass them from previous route if necessary)
+    materials_df = pd.read_csv('resources/material_data.csv')  # Assuming materials are stored in a CSV
     
-    return render_template('compare.html', compared_materials=compared_materials)
+    # Filter the DataFrame to get the selected materials
+    compared_materials_df = materials_df[materials_df['material'].isin(selected_names)]
+    
+    # Pass the filtered materials to the comparison template
+    return render_template('compare.html', compared_materials=compared_materials_df.to_dict(orient='records'))
 
 if __name__ == "__main__":
     serve(app, host="0.0.0.0", port=8000)

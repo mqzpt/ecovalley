@@ -52,13 +52,12 @@ def get_option_dataframes(material_dict) -> pd.DataFrame:
     for option in material_dict:
         option_df = materials_df.loc[materials_df['material'].isin(option.keys())]
         option_df['cost'] = round(option_df['price_per_kg'] * list(option.values()), 4)
-        
-        amount_used_series = pd.Series(list(option.values()))
-        option_df['amount_used_kg'] = amount_used_series.round(3)
-        
+        option_df['amount_used_kg'] = list(option.values())
+        option_df['amount_used_kg'].round(3)
         option_df['energy_used_mj'] = round(option_df['energy_mj_per_kg'] * list(option.values()), 3)
         option_df['carbon_used_kg'] = round(option_df['carbon_kg_per_kg'] * list(option.values()), 3)
         option_frames.append(option_df[['material', 'amount_used_kg', 'cost', 'energy_used_mj', 'carbon_used_kg']])
+        
         
     return option_frames
         
